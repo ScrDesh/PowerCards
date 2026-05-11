@@ -1,6 +1,10 @@
 package com.desh.powercards;
 
+import com.desh.powercards.effects.ModEffects;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
@@ -9,9 +13,11 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public class ModCards {
+
     public static final DeferredRegister<CardDefinition> CARDS =
             DeferredRegister.create(ModRegistries.CARD_REGISTRY_KEY, "powercards");
 
@@ -67,5 +73,27 @@ public class ModCards {
                     .rarity(CardDefinition.CardRarity.UNCOMMON)
                     .attribute(Attributes.JUMP_STRENGTH, 0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                     .attribute(Attributes.SAFE_FALL_DISTANCE, 0.75, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> FORTIFYPLUS =
+            registerCard("fortifyplus", () -> CardDefinition
+                    .builder("Fortify+", 0x55FFFF, 8)
+                    .rarity(CardDefinition.CardRarity.LEGENDARY)
+                    .attribute(ModAttributes.DAMAGE_TAKEN, -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).maxStack(3)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> HEALTHYHEART =
+            registerCard("healthyheart", () -> CardDefinition
+                    .builder("Healthy Heart", 0xFF5555, 4)
+                    .rarity(CardDefinition.CardRarity.UNCOMMON)
+                    .effect(ModEffects.IDLE_HEAL)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> RECKLESS =
+            registerCard("reckless", () -> CardDefinition
+                    .builder("Reckless", 0xFF5555, 4)
+                    .rarity(CardDefinition.CardRarity.UNCOMMON)
+                    .attribute(ModAttributes.DAMAGE_DEALT, 0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .attribute(ModAttributes.DAMAGE_TAKEN, 0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                     .build());
 }

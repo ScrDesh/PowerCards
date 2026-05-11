@@ -2,6 +2,7 @@ package com.desh.powercards;
 
 import com.desh.powercards.deckclasses.DeckAttachment;
 import com.desh.powercards.deckclasses.ModMenus;
+import com.desh.powercards.effects.ModEffects;
 import com.desh.powercards.packets.ModPackets;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,5 +25,9 @@ public class PowerCards {
         DeckAttachment.ATTACHMENT_TYPES.register(modEventBus);
         ModPackets.register(modEventBus);
         ModMenus.MENU_TYPES.register(modEventBus);
+        ModEffects.register(modEventBus);
+        ModAttributes.register(modEventBus);
+
+        ModCreativeTab.register(modEventBus);
     }
 }

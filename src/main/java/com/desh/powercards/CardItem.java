@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -73,6 +74,11 @@ public class CardItem extends Item {
             valueStr = valueStr.replace(".0", "");
             lines.add(Component.literal(valueStr + " ").append(Component.translatable(entry.attribute().value().getDescriptionId()))
                     .withStyle(col));
+        }
+
+        for (CardDefinition.EffectEntry effect : def.getEffectLines()) {
+            ChatFormatting col = effect.entry().value().isBeneficial() ? ChatFormatting.BLUE : ChatFormatting.RED;
+            lines.add(Component.literal("+Permanent ").append(Component.translatable(effect.entry().value().getDisplayName().getString())).withStyle(col));
         }
 
         for (CardDefinition.PassiveEntry passive : def.getCustomLines()) {

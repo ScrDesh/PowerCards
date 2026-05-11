@@ -5,10 +5,14 @@ import com.desh.powercards.ModRegistries;
 import com.desh.powercards.PowerCards;
 import com.desh.powercards.packets.ModPackets;
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
@@ -140,7 +144,21 @@ public class PlayerDeckData {
         // Only reapply if deck is valid
         if (!deckValid) return;
 
+        HashMap<MobEffect, Integer> effectsToAdd = new HashMap<>();
+
         for (CardDefinition def : deckInventory.getEquippedDefinitions()) {
+
+            for (CardDefinition.EffectEntry effect : def.getEffectLines()) {
+                MobEffect key = effect.entry().value();
+                LogUtils.getLogger().debug(key + " - " + effectsToAdd.getOrDefault(key, 0)+1);
+                effectsToAdd.put(key, effectsToAdd.getOrDefault(key, 0)+1);
+            }
+
+            for (MobEffect effect : effectsToAdd.keySet()) {
+                MobEffectInstance effectInst = new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect), -1, effectsToAdd.get(effect)-1, true, true);
+                player.addEffect(effectInst);
+            }
+
             for (CardDefinition.AttributeEntry entry : def.getAttributeLines()) {
                 var instance = player.getAttributes().getInstance(entry.attribute());
                 if (instance == null) continue;
@@ -164,6 +182,12 @@ public class PlayerDeckData {
 
     private void removeAttributeModifiers() {
         if (player == null) return;
+
+        for (MobEffectInstance effect : player.getActiveEffects()) {
+            if (effect.getDuration() == -1 && effect.isAmbient() && effect.isVisible()) {
+                player.removeEffect(effect.getEffect());
+            }
+        }
 
         for (AttributeInstance instance : player.getAttributes().getSyncableAttributes()) {
 
