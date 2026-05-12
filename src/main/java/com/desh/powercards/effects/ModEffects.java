@@ -19,6 +19,9 @@ public class ModEffects {
     public static final Holder<MobEffect> IDLE_HEAL = MOB_EFFECTS.register("idle_heal",
             () -> new EffectIdleHeal(MobEffectCategory.BENEFICIAL, 0xFF5555));
 
+    public static final Holder<MobEffect> IDLE_ABSORPTION = MOB_EFFECTS.register("idle_absorption",
+            () -> new EffectIdleAbsorption(MobEffectCategory.BENEFICIAL, 0xFDF55F));
+
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);
     }

@@ -68,16 +68,20 @@ public class DeckMenu extends AbstractContainerMenu {
             int deckSlots = DeckInventory.DECK_SIZE;
 
             if (slotIndex < deckSlots) {
-                // shift clicking from deck -> move to player inventory
                 if (!moveItemStackTo(stack, deckSlots, slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
             } else {
-                // shift clicking from player inventory -> move to deck
                 if (!moveItemStackTo(stack, 0, deckSlots, false)) {
                     return ItemStack.EMPTY;
                 }
             }
+
+            if (stack.getCount() == result.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(player, stack);
 
             if (stack.isEmpty()) slot.set(ItemStack.EMPTY);
             else slot.setChanged();

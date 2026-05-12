@@ -3,15 +3,18 @@ package com.desh.powercards;
 import com.desh.powercards.effects.ModEffects;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.w3c.dom.Attr;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
@@ -84,9 +87,17 @@ public class ModCards {
 
     public static final DeferredHolder<CardDefinition, CardDefinition> HEALTHYHEART =
             registerCard("healthyheart", () -> CardDefinition
-                    .builder("Healthy Heart", 0xFF5555, 4)
+                    .builder("Healthy Heart", 0xFF5555, 3)
                     .rarity(CardDefinition.CardRarity.UNCOMMON)
                     .effect(ModEffects.IDLE_HEAL)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> HEARTOFGOLD =
+            registerCard("heartofgold", () -> CardDefinition
+                    .builder("Heart of Gold", 0xFDF55F, 3)
+                    .rarity(CardDefinition.CardRarity.UNCOMMON)
+                    .effect(ModEffects.IDLE_ABSORPTION)
+                    .attribute(Attributes.MAX_ABSORPTION, 10, AttributeModifier.Operation.ADD_VALUE)
                     .build());
 
     public static final DeferredHolder<CardDefinition, CardDefinition> RECKLESS =
@@ -95,5 +106,22 @@ public class ModCards {
                     .rarity(CardDefinition.CardRarity.UNCOMMON)
                     .attribute(ModAttributes.DAMAGE_DEALT, 0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                     .attribute(ModAttributes.DAMAGE_TAKEN, 0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> FLAKJACKET =
+            registerCard("flakjacket", () -> CardDefinition
+                    .builder("Flak Jacket", 0xB700FF, 3)
+                    .rarity(CardDefinition.CardRarity.UNCOMMON)
+                    .attribute(ModAttributes.EXPLOSION_DAMAGE_TAKEN, -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .attribute(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE, 0.4, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .maxStack(3)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> NOWYOUSEEME =
+            registerCard("nowyouseeme", () -> CardDefinition
+                    .builder("Now You See Me", 0xFFE100, 0)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .effect(MobEffects.GLOWING)
+                    .maxStack(1)
                     .build());
 }

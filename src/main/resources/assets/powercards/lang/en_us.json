@@ -4,10 +4,10 @@
 
   "attribute.powercards.damage_taken": "Damage Taken",
   "attribute.powercards.damage_dealt": "Damage Dealt",
+  "attribute.powercards.explosion_damage_taken": "Explosion Damage Taken",
 
   "effect.powercards.idle_heal": "Idle Regeneration",
+  "effect.powercards.idle_absorption": "Idle Absorption",
 
-  "creativetab.powercards.cards": "PowerCards",
-
-  "item.powercards.card.step_it_up": "Step It Up"
+  "creativetab.powercards.cards": "PowerCards"
 }

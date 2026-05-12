@@ -38,8 +38,9 @@ public class CardDefinition {
     ) {}
 
     public record PassiveEntry(
-            String effectKey,    // e.g. "extra_jump_height"
-            double value
+            String effectKey,
+            double value,
+            boolean upIsPositive
     ) {}
 
     public record AbilityEntry(
@@ -117,8 +118,8 @@ public class CardDefinition {
             return this;
         };
 
-        public Builder passive(String key, double value) {
-            this.customLines.add(new PassiveEntry(key, value));
+        public Builder passive(String key, double value, boolean upIsPositive) {
+            this.customLines.add(new PassiveEntry(key, value, upIsPositive));
             return this;
         }
 

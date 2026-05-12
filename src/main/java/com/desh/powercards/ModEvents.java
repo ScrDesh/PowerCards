@@ -2,10 +2,14 @@ package com.desh.powercards;
 
 import com.desh.powercards.deckclasses.*;
 import com.desh.powercards.packets.DeckInvKeyPacket;
+import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -22,6 +26,11 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @EventBusSubscriber(modid = PowerCards.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class ModEvents {
@@ -63,8 +72,12 @@ public class ModEvents {
         else {data.putInt("combatTime", 0);}
     }
 
+    private static final List<String> EXPLOSION_TYPES = Arrays.asList("explosion", "explosion.player", "fireball", "fireworks", "witherSkull");
+
     @SubscribeEvent
     public static void onDamage(LivingIncomingDamageEvent event) {
+        CompoundTag data = event.getEntity().getPersistentData();
+
         if (event.getEntity() instanceof Player player) {player.getPersistentData().putInt("combatTime", 160);}
         if (event.getSource().getEntity() instanceof Player player) {player.getPersistentData().putInt("combatTime", 160);}
 
@@ -74,6 +87,10 @@ public class ModEvents {
         damageModifier *= (float) event.getEntity().getAttributeValue(ModAttributes.DAMAGE_TAKEN);
         if (event.getSource().getEntity() instanceof LivingEntity entity)
             {damageModifier *= (float) entity.getAttributeValue(ModAttributes.DAMAGE_DEALT);}
+
+        // DAMAGE TYPE REDUCTIONS
+        if (EXPLOSION_TYPES.contains(event.getSource().type().msgId())) // EXPLOSION DAMAGES
+            {damageModifier *= (float) event.getEntity().getAttributeValue(ModAttributes.EXPLOSION_DAMAGE_TAKEN);}
 
         event.setAmount(event.getAmount()*damageModifier);
     }

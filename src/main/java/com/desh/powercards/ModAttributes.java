@@ -31,9 +31,16 @@ public class ModAttributes {
                             .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
             );
 
+    public static final Holder<Attribute> EXPLOSION_DAMAGE_TAKEN =
+            ATTRIBUTES.register("explosion_damage_taken", () ->
+                    new RangedAttribute("attribute.powercards.explosion_damage_taken", 1, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE)
+            );
+
     @SubscribeEvent
     public static void modifyPlayerAttributes(EntityAttributeModificationEvent event) {
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.DAMAGE_TAKEN));
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.DAMAGE_DEALT));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.EXPLOSION_DAMAGE_TAKEN));
     }
 }

@@ -1,9 +1,6 @@
 package com.desh.powercards;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -12,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -82,8 +78,26 @@ public class CardItem extends Item {
         }
 
         for (CardDefinition.PassiveEntry passive : def.getCustomLines()) {
-            lines.add(Component.literal(passive.effectKey() + ": " + passive.value())
-                    .withStyle(ChatFormatting.GREEN));
+
+            String stringToProcess = passive.effectKey();
+            Component finalMsg = Component.empty();
+            ChatFormatting col;
+
+            if (stringToProcess.contains("damageModifier.")) {
+                stringToProcess = stringToProcess.replace("damageModifier.", "");
+                String icon = (passive.value() < 0) ? "" : "+";
+
+                if (passive.upIsPositive())
+                    {col = (passive.value() >= 0) ? ChatFormatting.BLUE : ChatFormatting.RED;}
+                else
+                    {col = (passive.value() >= 0) ? ChatFormatting.RED : ChatFormatting.BLUE;}
+
+                finalMsg = Component.literal((icon + passive.value()*100).replace(".0", "") + "% ")
+                        .append(Component.translatable(stringToProcess))
+                        .append(" Damage Taken").withStyle(col);
+            }
+
+            lines.add(finalMsg);
         }
 
         if (def.isAbility()) {

@@ -5,6 +5,7 @@ import com.desh.powercards.ModRegistries;
 import com.desh.powercards.PowerCards;
 import com.desh.powercards.packets.ModPackets;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -183,24 +184,29 @@ public class PlayerDeckData {
     private void removeAttributeModifiers() {
         if (player == null) return;
 
+        List<Holder<MobEffect>> toRemove = new ArrayList<>();
         for (MobEffectInstance effect : player.getActiveEffects()) {
             if (effect.getDuration() == -1 && effect.isAmbient() && effect.isVisible()) {
-                player.removeEffect(effect.getEffect());
+                toRemove.add(effect.getEffect());
             }
         }
+        for (Holder<MobEffect> effect : toRemove) {
+            player.removeEffect(effect);
+        }
 
-        for (AttributeInstance instance : player.getAttributes().getSyncableAttributes()) {
+        Collection <AttributeInstance> currentAtts = player.getAttributes().getSyncableAttributes();
+        for (AttributeInstance instance : currentAtts) {
 
             // Collect IDs to remove (avoid ConcurrentModificationException)
-            List<ResourceLocation> toRemove = new ArrayList<>();
+            List<ResourceLocation> toRemove2 = new ArrayList<>();
 
             for (AttributeModifier modifier : instance.getModifiers()) {
                 if (modifier.id().getNamespace().equals("powercards")) {
-                    toRemove.add(modifier.id());
+                    toRemove2.add(modifier.id());
                 }
             }
 
-            for (ResourceLocation id : toRemove) {
+            for (ResourceLocation id : toRemove2) {
                 instance.removeModifier(id);
             }
 
