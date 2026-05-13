@@ -5,6 +5,10 @@
   "attribute.powercards.damage_taken": "Damage Taken",
   "attribute.powercards.damage_dealt": "Damage Dealt",
   "attribute.powercards.explosion_damage_taken": "Explosion Damage Taken",
+  "attribute.powercards.healing_taken": "Healing Recieved",
+  "attribute.powercards.ranged_damage_dealt": "Projectile Damage",
+  "attribute.powercards.melee_damage_dealt": "Melee Damage",
+  "attribute.powercards.bp_bonus": "Additional BP",
 
   "effect.powercards.idle_heal": "Idle Regeneration",
   "effect.powercards.idle_absorption": "Idle Absorption",

@@ -12,6 +12,7 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -19,6 +20,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.event.entity.EntityEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -74,6 +76,14 @@ public class ModEvents {
 
     private static final List<String> EXPLOSION_TYPES = Arrays.asList("explosion", "explosion.player", "fireball", "fireworks", "witherSkull");
 
+    public static void onHeal(LivingHealEvent event) {
+        float healModifier = 1.0f;
+
+        healModifier *= (float) event.getEntity().getAttributeValue(ModAttributes.HEALING_TAKEN);
+
+        event.setAmount(event.getAmount()*healModifier);
+    }
+
     @SubscribeEvent
     public static void onDamage(LivingIncomingDamageEvent event) {
         CompoundTag data = event.getEntity().getPersistentData();
@@ -85,8 +95,15 @@ public class ModEvents {
 
         // APPLY DAMAGE-TAKEN / DAMAGE-DEALT MODIFIERS
         damageModifier *= (float) event.getEntity().getAttributeValue(ModAttributes.DAMAGE_TAKEN);
-        if (event.getSource().getEntity() instanceof LivingEntity entity)
-            {damageModifier *= (float) entity.getAttributeValue(ModAttributes.DAMAGE_DEALT);}
+        if (event.getSource().getEntity() instanceof LivingEntity attacker)
+            {damageModifier *= (float) attacker.getAttributeValue(ModAttributes.DAMAGE_DEALT);}
+
+        // MELEE/PROJECTILE DAMAGE AMOUNTS
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            if (event.getSource().getDirectEntity() instanceof Projectile projectile)
+                {damageModifier *= (float) attacker.getAttributeValue(ModAttributes.RANGED_DAMAGE_DEALT);}
+            else {damageModifier *= (float) attacker.getAttributeValue(ModAttributes.MELEE_DAMAGE_DEALT);}
+        }
 
         // DAMAGE TYPE REDUCTIONS
         if (EXPLOSION_TYPES.contains(event.getSource().type().msgId())) // EXPLOSION DAMAGES

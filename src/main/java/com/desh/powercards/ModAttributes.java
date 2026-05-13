@@ -37,10 +37,38 @@ public class ModAttributes {
                             .setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE)
             );
 
+    public static final Holder<Attribute> HEALING_TAKEN =
+            ATTRIBUTES.register("healing_taken", () ->
+                    new RangedAttribute("attribute.powercards.healing_taken", 1, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
+            );
+
+    public static final Holder<Attribute> MELEE_DAMAGE_DEALT =
+            ATTRIBUTES.register("melee_damage_dealt", () ->
+                    new RangedAttribute("attribute.powercards.melee_damage_dealt", 1, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
+            );
+
+    public static final Holder<Attribute> RANGED_DAMAGE_DEALT =
+            ATTRIBUTES.register("ranged_damage_dealt", () ->
+                    new RangedAttribute("attribute.powercards.ranged_damage_dealt", 1, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
+            );
+
+    public static final Holder<Attribute> ADDITIONAL_BP =
+            ATTRIBUTES.register("bp_bonus", () ->
+                    new RangedAttribute("attribute.powercards.bp_bonus", 0, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
+            );
+
     @SubscribeEvent
     public static void modifyPlayerAttributes(EntityAttributeModificationEvent event) {
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.DAMAGE_TAKEN));
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.DAMAGE_DEALT));
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.EXPLOSION_DAMAGE_TAKEN));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.HEALING_TAKEN));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.MELEE_DAMAGE_DEALT));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.RANGED_DAMAGE_DEALT));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.ADDITIONAL_BP));
     }
 }

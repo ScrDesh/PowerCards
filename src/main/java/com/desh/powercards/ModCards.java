@@ -94,7 +94,7 @@ public class ModCards {
 
     public static final DeferredHolder<CardDefinition, CardDefinition> HEARTOFGOLD =
             registerCard("heartofgold", () -> CardDefinition
-                    .builder("Heart of Gold", 0xFDF55F, 3)
+                    .builder("Heart of Gold", 0xFDF55F, 6)
                     .rarity(CardDefinition.CardRarity.UNCOMMON)
                     .effect(ModEffects.IDLE_ABSORPTION)
                     .attribute(Attributes.MAX_ABSORPTION, 10, AttributeModifier.Operation.ADD_VALUE)
@@ -123,5 +123,96 @@ public class ModCards {
                     .rarity(CardDefinition.CardRarity.RARE)
                     .effect(MobEffects.GLOWING)
                     .maxStack(1)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> REACHPLUS =
+            registerCard("reachplus", () -> CardDefinition
+                    .builder("Reach+", 0xDD00FF, 3)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(Attributes.BLOCK_INTERACTION_RANGE, 1, AttributeModifier.Operation.ADD_VALUE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> LONGARMOFTHELAW =
+            registerCard("longarmofthelaw", () -> CardDefinition
+                    .builder("Long Arm of The Law", 0xFF8800, 5)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(Attributes.ENTITY_INTERACTION_RANGE, 1, AttributeModifier.Operation.ADD_VALUE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> SPELUNKER =
+            registerCard("spelunker", () -> CardDefinition
+                    .builder("Spelunker", 0x3d95ae, 6)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(Attributes.BLOCK_BREAK_SPEED, 0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .effect(MobEffects.NIGHT_VISION)
+                    .maxStack(1)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> FREE_AIR =
+            registerCard("freewater", () -> CardDefinition
+                    .builder("Free Air", 0x00c8ff, 2)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(Attributes.OXYGEN_BONUS, 1, AttributeModifier.Operation.ADD_VALUE)
+                    .attribute(NeoForgeMod.SWIM_SPEED, -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> WARRIOR =
+            registerCard("warrior", () -> CardDefinition
+                    .builder("Warrior", 0xff0800, 5)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(ModAttributes.MELEE_DAMAGE_DEALT, 0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .attribute(ModAttributes.RANGED_DAMAGE_DEALT, -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .maxStack(1)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> RANGER =
+            registerCard("ranger", () -> CardDefinition
+                    .builder("Ranger", 0xff6a00, 5)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(ModAttributes.RANGED_DAMAGE_DEALT, 0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .attribute(ModAttributes.MELEE_DAMAGE_DEALT, -0.75, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .maxStack(1)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> RECOVERY =
+            registerCard("recovery", () -> CardDefinition
+                    .builder("Recovery", 0xffe100, 1)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(ModAttributes.HEALING_TAKEN, 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> THE_DEEP_END =
+            registerCard("thedeepend", () -> CardDefinition
+                    .builder("The Deep End", 0xff0004, 0)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(ModAttributes.ADDITIONAL_BP, 3, AttributeModifier.Operation.ADD_VALUE)
+                    .attribute(ModAttributes.DAMAGE_DEALT, -0.35, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .attribute(ModAttributes.DAMAGE_TAKEN, 0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> FLIMSY =
+            registerCard("flimsy", () -> CardDefinition
+                    .builder("Flimsy", 0xff0004, 0)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(ModAttributes.ADDITIONAL_BP, 1, AttributeModifier.Operation.ADD_VALUE)
+                    .attribute(ModAttributes.DAMAGE_DEALT, -0.20, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> UHC =
+            registerCard("uhc", () -> CardDefinition
+                    .builder("Ultra Hardcore", 0xff0004, 0)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(ModAttributes.ADDITIONAL_BP, 2, AttributeModifier.Operation.ADD_VALUE)
+                    .effect(ModEffects.IDLE_HEAL)
+                    .attribute(ModAttributes.HEALING_TAKEN, -1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+                    .maxStack(1)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> FRAGILE =
+            registerCard("fragile", () -> CardDefinition
+                    .builder("Fragile", 0xff0004, 0)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .attribute(ModAttributes.ADDITIONAL_BP, 5, AttributeModifier.Operation.ADD_VALUE)
+                    .attribute(Attributes.MAX_HEALTH, -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                     .build());
 }

@@ -1,6 +1,7 @@
 package com.desh.powercards.deckclasses;
 
 import com.desh.powercards.CardDefinition;
+import com.desh.powercards.ModAttributes;
 import com.desh.powercards.ModRegistries;
 import com.desh.powercards.PowerCards;
 import com.desh.powercards.packets.ModPackets;
@@ -92,7 +93,7 @@ public class PlayerDeckData {
     }
 
     public int getTotalBP() {
-        return totalBP;
+        return (int) (totalBP + Math.floor(player.getAttributeValue(ModAttributes.ADDITIONAL_BP)));
     }
 
     public boolean isDeckValid() {
