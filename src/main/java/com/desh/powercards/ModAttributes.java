@@ -61,6 +61,18 @@ public class ModAttributes {
                             .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
             );
 
+    public static final Holder<Attribute> NEGATIVE_EFFECT_DURATION =
+            ATTRIBUTES.register("negative_effect_duration", () ->
+                    new RangedAttribute("attribute.powercards.negative_effect_duration", 1, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE)
+            );
+
+    public static final Holder<Attribute> POSITIVE_EFFECT_DURATION =
+            ATTRIBUTES.register("positive_effect_duration", () ->
+                    new RangedAttribute("attribute.powercards.positive_effect_duration", 1, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
+            );
+
     @SubscribeEvent
     public static void modifyPlayerAttributes(EntityAttributeModificationEvent event) {
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.DAMAGE_TAKEN));
@@ -70,5 +82,7 @@ public class ModAttributes {
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.MELEE_DAMAGE_DEALT));
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.RANGED_DAMAGE_DEALT));
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.ADDITIONAL_BP));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.NEGATIVE_EFFECT_DURATION));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.POSITIVE_EFFECT_DURATION));
     }
 }

@@ -214,5 +214,45 @@ public class ModCards {
                     .rarity(CardDefinition.CardRarity.RARE)
                     .attribute(ModAttributes.ADDITIONAL_BP, 5, AttributeModifier.Operation.ADD_VALUE)
                     .attribute(Attributes.MAX_HEALTH, -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                    .maxStack(1)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> FEEL_FINE =
+            registerCard("feelfine", () -> CardDefinition
+                    .builder("Feelin' Fine", 0xfbc712, 2)
+                    .attribute(ModAttributes.NEGATIVE_EFFECT_DURATION, -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> TOXIC =
+            registerCard("toxic", () -> CardDefinition
+                    .builder("Toxic", 0x00b818, 3)
+                    .passive("passive.powercards.attacks_poison", true)
+                    .maxStack(3)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> WEIGHTLESS =
+            registerCard("weightless", () -> CardDefinition
+                    .builder("Weightless", 0xd58fdc, 7)
+                    .passive("passive.powercards.attacks_levitation", true)
+                    .maxStack(3)
+                    .rarity(CardDefinition.CardRarity.LEGENDARY)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> WEBBING =
+            registerCard("webbing", () -> CardDefinition
+                    .builder("Webbing", 0x7c5b5a, 3)
+                    .passive("passive.powercards.attacks_slowness", true)
+                    .maxStack(3)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> TUNNEL_VISION =
+            registerCard("tunnelvision", () -> CardDefinition
+                    .builder("Tunnel Vision", 0x6b8794, 1)
+                    .passive("passive.powercards.attacks_darkness", true)
+                    .maxStack(1)
+                    .rarity(CardDefinition.CardRarity.RARE)
                     .build());
 }

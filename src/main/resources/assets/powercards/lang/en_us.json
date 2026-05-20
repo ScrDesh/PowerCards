@@ -9,6 +9,13 @@
   "attribute.powercards.ranged_damage_dealt": "Projectile Damage",
   "attribute.powercards.melee_damage_dealt": "Melee Damage",
   "attribute.powercards.bp_bonus": "Additional BP",
+  "attribute.powercards.negative_effect_duration": "Duration of Negative Effects",
+  "attribute.powercards.positive_effect_duration": "Duration of Positive Effects",
+
+  "passive.powercards.attacks_poison": "Attacks Poison Enemies",
+  "passive.powercards.attacks_levitation": "Attacks Levitate Enemies",
+  "passive.powercards.attacks_slowness": "Attacks Slow Enemies",
+  "passive.powercards.attacks_darkness": "Attacks Envelop Enemies in Darkness",
 
   "effect.powercards.idle_heal": "Idle Regeneration",
   "effect.powercards.idle_absorption": "Idle Absorption",

@@ -39,8 +39,7 @@ public class CardDefinition {
 
     public record PassiveEntry(
             String effectKey,
-            double value,
-            boolean upIsPositive
+            boolean positive
     ) {}
 
     public record AbilityEntry(
@@ -118,8 +117,8 @@ public class CardDefinition {
             return this;
         };
 
-        public Builder passive(String key, double value, boolean upIsPositive) {
-            this.customLines.add(new PassiveEntry(key, value, upIsPositive));
+        public Builder passive(String key, boolean isPositive) {
+            this.customLines.add(new PassiveEntry(key, isPositive));
             return this;
         }
 

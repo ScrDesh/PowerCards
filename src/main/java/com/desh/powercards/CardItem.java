@@ -80,22 +80,12 @@ public class CardItem extends Item {
         for (CardDefinition.PassiveEntry passive : def.getCustomLines()) {
 
             String stringToProcess = passive.effectKey();
-            Component finalMsg = Component.empty();
-            ChatFormatting col;
+            ChatFormatting col = ChatFormatting.RED;
+            String symbol = "-";
 
-            if (stringToProcess.contains("damageModifier.")) {
-                stringToProcess = stringToProcess.replace("damageModifier.", "");
-                String icon = (passive.value() < 0) ? "" : "+";
+            if (passive.positive()) {col = ChatFormatting.BLUE; symbol = "+";}
 
-                if (passive.upIsPositive())
-                    {col = (passive.value() >= 0) ? ChatFormatting.BLUE : ChatFormatting.RED;}
-                else
-                    {col = (passive.value() >= 0) ? ChatFormatting.RED : ChatFormatting.BLUE;}
-
-                finalMsg = Component.literal((icon + passive.value()*100).replace(".0", "") + "% ")
-                        .append(Component.translatable(stringToProcess))
-                        .append(" Damage Taken").withStyle(col);
-            }
+            Component finalMsg = Component.literal(symbol).append(Component.translatable(passive.effectKey())).withStyle(col);
 
             lines.add(finalMsg);
         }

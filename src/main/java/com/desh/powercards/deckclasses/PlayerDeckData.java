@@ -26,7 +26,7 @@ public class PlayerDeckData {
     private final DeckInventory deckInventory;
     private int totalBP = 0;
     private boolean deckValid = true;
-    private final Map<String, Double> activeEffects = new HashMap<>();
+    private final Map<String, Integer> activeEffects = new HashMap<>();
     private final Map<ResourceLocation, AbilityState> abilityStates = new HashMap<>();
 
     public record AbilityState(long cooldownEndTick) {
@@ -66,7 +66,7 @@ public class PlayerDeckData {
 
         for (CardDefinition def : deckInventory.getEquippedDefinitions()) {
             for (CardDefinition.PassiveEntry passive : def.getCustomLines()) {
-                activeEffects.merge(passive.effectKey(), passive.value(), Double::sum);
+                activeEffects.merge(passive.effectKey(), 1, Integer::sum);
             }
         }
 
@@ -76,8 +76,8 @@ public class PlayerDeckData {
             abilityStates.putIfAbsent(id, AbilityState.READY);
         }
 
-        syncToClient();
         applyAttributeModifiers();
+        syncToClient();
     }
 
     // BP
@@ -102,8 +102,8 @@ public class PlayerDeckData {
 
     // Effect and Ability Queries
 
-    public double getEffect(String key) {
-        return activeEffects.getOrDefault(key, 0.0);
+    public Integer getEffect(String key) {
+        return activeEffects.getOrDefault(key, 0);
     }
 
     public boolean hasEffect(String key) {
