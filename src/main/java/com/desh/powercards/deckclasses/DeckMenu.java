@@ -31,7 +31,7 @@ public class DeckMenu extends AbstractContainerMenu {
     public DeckInventory getDeckInventory() { return deckInventory; }
 
     private void setupSlots(Inventory playerInventory) {
-        // --- Deck slots (4x4 grid) ---
+        // deck slots
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 5; col++) {
                 int slotIndex = row * 5 + col;

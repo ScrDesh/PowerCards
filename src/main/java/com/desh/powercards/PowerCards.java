@@ -5,12 +5,9 @@ import com.desh.powercards.deckclasses.ModMenus;
 import com.desh.powercards.effects.ModEffects;
 import com.desh.powercards.packets.ModPackets;
 import com.mojang.logging.LogUtils;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 
 @Mod(PowerCards.MODID)

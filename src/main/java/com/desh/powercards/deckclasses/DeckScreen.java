@@ -33,9 +33,13 @@ public class DeckScreen extends AbstractContainerScreen<DeckMenu> {
 
 
         if (ClientPacketHandler.getClientTotalBP() > 27) {
-            String bpText = ClientPacketHandler.isClientDeckValid() ?
-                    "BP: " + (ClientPacketHandler.getClientTotalBP()-menu.getDeckInventory().getTotalEquippedCost())
-                            + "/" + ClientPacketHandler.getClientTotalBP(): "Too Expensive!";
+            Component bpText = ClientPacketHandler.isClientDeckValid() ?
+                    Component.translatable("ui.powercards.bp").append(
+                            Component.literal(" " + (ClientPacketHandler.getClientTotalBP()-menu.getDeckInventory().getTotalEquippedCost())
+                            + "/" + (ClientPacketHandler.getClientTotalBP()))
+                    )
+                    :
+                    Component.translatable("ui.powercards.overcost");
             int color = ClientPacketHandler.isClientDeckValid() ? 0x55FF55 : 0xFF5555;
             graphics.drawString(Minecraft.getInstance().font, bpText, leftPos + 8, topPos + 12, color);
         }

@@ -31,5 +31,6 @@ public class DeckAttachment {
                             return data;
                         }
                     })
+                    .copyOnDeath()
                     .build());
 }

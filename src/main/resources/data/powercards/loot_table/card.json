@@ -1,0 +1,12 @@
+{
+  "pools": [
+    {
+      "rolls": 3,
+      "entries": [
+        { "type": "minecraft:item", "name": "powercards:card_pack", "weight": 1 },
+        { "type": "minecraft:item", "name": "powercards:card_shreds", "weight": 12 },
+        { "type": "minecraft:empty", "weight": 32 }
+      ]
+    }
+  ]
+}

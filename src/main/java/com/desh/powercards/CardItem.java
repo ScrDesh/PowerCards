@@ -7,6 +7,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -17,7 +18,7 @@ public class CardItem extends Item {
     private final Supplier<CardDefinition> definitionSupplier;
 
     public CardItem(Supplier<CardDefinition> definitionSupplier) {
-        super(new Item.Properties().stacksTo(1));
+        super(new Item.Properties().stacksTo(1).fireResistant());
         this.definitionSupplier = definitionSupplier;
     }
 
@@ -27,7 +28,7 @@ public class CardItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        return Component.literal(definitionSupplier.get().getDisplayName())
+        return Component.translatable(definitionSupplier.get().getDisplayName())
                 .withColor(definitionSupplier.get().getColour());
     }
 
@@ -41,18 +42,20 @@ public class CardItem extends Item {
         }
     }
 
+    // this override sucks and is overgrown and i hate it but idk how to shorten it so this is future desh's problem
+
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context,
                                 List<Component> lines, TooltipFlag flag) {
         CardDefinition def = getDefinition();
 
-        lines.add(Component.literal("Cost: ").withStyle(ChatFormatting.GRAY).append(
-                Component.literal(def.getBpCost() + " " + "◆".repeat(def.getBpCost()))
+        lines.add(Component.translatable("ui.powercards.cost").withStyle(ChatFormatting.GRAY).append(
+                Component.literal(" " + def.getBpCost() + " " + "◆".repeat(def.getBpCost()))
                         .withStyle(ChatFormatting.GREEN)
         ));
-        if (def.getMaxStack() < 100) {lines.add(Component.literal("Max Stack: " + def.getMaxStack()).withStyle(ChatFormatting.GRAY));}
+        if (def.getMaxStack() < 100) {lines.add(Component.translatable("ui.powercards.maxstack").append(" " + def.getMaxStack()).withStyle(ChatFormatting.GRAY));}
         lines.add(Component.empty());
-        lines.add(Component.literal("When in Deck:").withStyle(ChatFormatting.GRAY));
+        lines.add(Component.translatable("ui.powercards.whenindeck").withStyle(ChatFormatting.GRAY));
 
         for (CardDefinition.AttributeEntry entry : def.getAttributeLines()) {
             String opSymbol = (entry.value() >= 0) ? "+" : "";
@@ -74,7 +77,9 @@ public class CardItem extends Item {
 
         for (CardDefinition.EffectEntry effect : def.getEffectLines()) {
             ChatFormatting col = effect.entry().value().isBeneficial() ? ChatFormatting.BLUE : ChatFormatting.RED;
-            lines.add(Component.literal("+Permanent ").append(Component.translatable(effect.entry().value().getDisplayName().getString())).withStyle(col));
+            lines.add(Component.literal("+").append(
+                    Component.translatable("ui.powercards.permanenteffect")).append(" ")
+                            .append(Component.translatable(effect.entry().value().getDescriptionId())).withStyle(col));
         }
 
         for (CardDefinition.PassiveEntry passive : def.getCustomLines()) {

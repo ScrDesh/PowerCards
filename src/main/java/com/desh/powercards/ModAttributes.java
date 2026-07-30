@@ -73,6 +73,12 @@ public class ModAttributes {
                             .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
             );
 
+    public static final Holder<Attribute> LIFESTEAL =
+            ATTRIBUTES.register("lifesteal", () ->
+                    new RangedAttribute("attribute.powercards.lifesteal", 1, 0, 1000)
+                            .setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE)
+            );
+
     @SubscribeEvent
     public static void modifyPlayerAttributes(EntityAttributeModificationEvent event) {
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.DAMAGE_TAKEN));
@@ -83,6 +89,6 @@ public class ModAttributes {
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.RANGED_DAMAGE_DEALT));
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.ADDITIONAL_BP));
         event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.NEGATIVE_EFFECT_DURATION));
-        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.POSITIVE_EFFECT_DURATION));
+        event.getTypes().forEach(entityType -> event.add(entityType, ModAttributes.LIFESTEAL));
     }
 }

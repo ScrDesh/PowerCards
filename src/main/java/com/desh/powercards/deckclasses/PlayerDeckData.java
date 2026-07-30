@@ -24,7 +24,7 @@ public class PlayerDeckData {
 
     private ServerPlayer player;
     private final DeckInventory deckInventory;
-    private int totalBP = 0;
+    private int totalBP = 3;
     private boolean deckValid = true;
     private final Map<String, Integer> activeEffects = new HashMap<>();
     private final Map<ResourceLocation, AbilityState> abilityStates = new HashMap<>();
@@ -90,6 +90,15 @@ public class PlayerDeckData {
     public void setBP(int amount) {
         totalBP = Math.max(0, amount);
         rebuildDerivedState();
+    }
+
+    public void addBP() {
+        totalBP = Math.min(27, totalBP+1);
+        rebuildDerivedState();
+    }
+
+    public int getBaseBP() {
+        return totalBP;
     }
 
     public int getTotalBP() {
@@ -198,7 +207,7 @@ public class PlayerDeckData {
         Collection <AttributeInstance> currentAtts = player.getAttributes().getSyncableAttributes();
         for (AttributeInstance instance : currentAtts) {
 
-            // Collect IDs to remove (avoid ConcurrentModificationException)
+            // Collect IDs to remove (avoid modifying while referencing)
             List<ResourceLocation> toRemove2 = new ArrayList<>();
 
             for (AttributeModifier modifier : instance.getModifiers()) {

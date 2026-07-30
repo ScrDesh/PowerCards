@@ -11,21 +11,21 @@ import java.util.List;
 
 public class CardDefinition {
 
-    // --- Identity ---
+    // Identity
     private final String displayName;
     private final Integer colour;
     private final int bpCost;
-    private final int maxStack;       // how many copies can be equipped at once
+    private final int maxStack;       // How many copies can be equipped at once, will default to some crazy bs like 9999
     private final CardRarity rarity;
 
-    // --- The three line types ---
+    // The three line types
     private final List<AttributeEntry> attributeLines;
     private final List<PassiveEntry> customLines;
     private final List<EffectEntry> effectLines;
     @Nullable
     private final AbilityEntry abilityLine;   // null if card has no ability
 
-    // --- Nested types for the three line kinds ---
+    // Nested types for the three line kinds
 
     public record AttributeEntry(
             Holder<Attribute> attribute,
@@ -43,13 +43,13 @@ public class CardDefinition {
     ) {}
 
     public record AbilityEntry(
-            String effectKey,    // looked up in your AbilityEffectRegistry later
+            String effectKey,    // i lowk have no idea how im gonna make this work but fuck it !
             int cooldownTicks
     ) {}
 
     public enum CardRarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
 
-    // --- Private constructor, use the Builder ---
+    // Private constructor, use the Builder
     private CardDefinition(Builder builder) {
         this.displayName    = builder.displayName;
         this.colour         = builder.colour;
@@ -62,7 +62,7 @@ public class CardDefinition {
         this.effectLines    = List.copyOf(builder.effectLines);
     }
 
-    // --- Getters ---
+    // Getters
     public String getDisplayName()              { return displayName; }
     public Integer getColour()                  { return colour; }
     public int getBpCost()                      { return bpCost; }
@@ -75,7 +75,7 @@ public class CardDefinition {
     @Nullable
     public AbilityEntry getAbilityLine()        { return abilityLine; }
 
-    // --- Builder ---
+    // Builder
     public static Builder builder(String displayName, Integer colour, int bpCost) {
         return new Builder(displayName, colour, bpCost);
     }
