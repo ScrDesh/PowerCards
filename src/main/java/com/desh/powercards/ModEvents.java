@@ -175,14 +175,14 @@ public class ModEvents {
             data.putInt("crouchTime", 0);
         }
 
-        if (data.getInt("crouchTime") > 60 && player.getData(DeckAttachment.DECK_DATA).hasEffect("passive.powercards.spring_jump")) {
+        if (data.getInt("crouchTime") > 30 && player.getData(DeckAttachment.DECK_DATA).hasEffect("passive.powercards.spring_jump")) {
             int level = player.getData(DeckAttachment.DECK_DATA).getEffect("passive.powercards.spring_jump");
-            int wantlevel = (data.getInt("crouchTime")-40)/20;
+            int wantlevel = (data.getInt("crouchTime")-10)/20;
 
             player.addEffect(new MobEffectInstance(
                     MobEffects.JUMP,
                     3,
-                    Math.min(level, wantlevel),
+                    Math.min(level, wantlevel)*2,
                     true,
                     false,
                     true));

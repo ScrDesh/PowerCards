@@ -373,7 +373,7 @@ public class ModCards {
 
     public static final DeferredHolder<CardDefinition, CardDefinition> GET_LOW =
             registerCard("spring_jump", () -> CardDefinition
-                    .builder("card.powercards.spring_jump", 0xFF00DC, 1)
+                    .builder("card.powercards.spring_jump", 0x95FF00, 1)
                     .passive("passive.powercards.spring_jump", true)
                     .rarity(CardDefinition.CardRarity.RARE)
                     .build());

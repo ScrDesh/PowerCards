@@ -45,7 +45,7 @@
   "ui.powercards.permanenteffect": "Permanent",
   "ui.powercards.overcost": "Too Expensive!",
   "ui.powercards.still_in_combat": "Can't Edit Deck in Combat!",
-  "ui.powercards.cardpacktext": "Gives 4 Random Cards When Used",
+  "ui.powercards.cardpacktext": "Gives Random Cards When Used",
   "ui.powercards.max_bp_reached": "Already at Max BP!",
   "ui.powercards.plus1bp": "+1 Build Points",
   "ui.powercards.chargelevel": "Charge Level",
