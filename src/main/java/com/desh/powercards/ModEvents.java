@@ -10,8 +10,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
@@ -125,6 +128,7 @@ public class ModEvents {
         }
     }
 
+
     @SubscribeEvent
     public static void onCraft(PlayerEvent.ItemCraftedEvent event) {
         if (event.getCrafting().getItem() == ModCards.CARD_SHREDS.asItem()) {
@@ -160,7 +164,45 @@ public class ModEvents {
     }
 
     @SubscribeEvent
+    public static void onTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        CompoundTag data = event.getEntity().getPersistentData();
+
+        if (player.isCrouching() && player.onGround()) {
+            data.putInt("crouchTime", data.getInt("crouchTime")+1);
+        }
+        else {
+            data.putInt("crouchTime", 0);
+        }
+
+        if (data.getInt("crouchTime") > 60 && player.getData(DeckAttachment.DECK_DATA).hasEffect("passive.powercards.spring_jump")) {
+            int level = player.getData(DeckAttachment.DECK_DATA).getEffect("passive.powercards.spring_jump");
+            int wantlevel = (data.getInt("crouchTime")-40)/20;
+
+            player.addEffect(new MobEffectInstance(
+                    MobEffects.JUMP,
+                    3,
+                    Math.min(level, wantlevel),
+                    true,
+                    false,
+                    true));
+
+            player.displayClientMessage(Component.translatable("ui.powercards.chargelevel").withStyle(ChatFormatting.GREEN).append(Component.literal(": " + Math.min(level, wantlevel))), true);
+        }
+    }
+
+    @SubscribeEvent
     public static void onDeath(LivingDeathEvent event) {
+
+        if (event.getEntity().getData(DeckAttachment.DECK_DATA).hasEffect("passive.powercards.tenacity")
+            && event.getEntity() instanceof Player player
+            && !player.getCooldowns().isOnCooldown(ModCards.getCardItem(ModCards.TENACITY)))
+            {
+                event.setCanceled(true);
+                player.setHealth(0.1f);
+                player.getCooldowns().addCooldown(ModCards.getCardItem(ModCards.TENACITY), 1200);
+            }
+
         if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer player) {
             PlayerDeckData deckdata = player.getData(DeckAttachment.DECK_DATA);
             if (deckdata.hasEffect("passive.powercards.holding")) {return;}

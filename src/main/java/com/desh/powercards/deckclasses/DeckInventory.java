@@ -5,6 +5,7 @@ import com.desh.powercards.CardItem;
 import com.desh.powercards.ModRegistries;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -53,6 +54,16 @@ public class DeckInventory extends ItemStackHandler {
             }
         }
         return count;
+    }
+
+    public boolean containsCard(Item item) {
+        for (int i = 0; i < getSlots(); i++) {
+            ItemStack stack = getStackInSlot(i);
+            if (stack.getItem() instanceof CardItem cardItem) {
+                if (item.getDescription().equals(cardItem.getDescription())) {return true;}
+            }
+        }
+        return false;
     }
 
     public List<CardDefinition> getEquippedDefinitions() {

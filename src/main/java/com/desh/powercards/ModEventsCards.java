@@ -112,11 +112,12 @@ public class ModEventsCards {
 
         // SPECIFIC EFFECT - SPITE SPIRIT
         if (event.getEntity().getData(DeckAttachment.DECK_DATA).hasEffect("passive.powercards.spiritofspite")
-                && Math.random() > 0.75d
                 && event.getEntity() instanceof Player player
+                && !player.getCooldowns().isOnCooldown(ModCards.getCardItem(ModCards.VENGEFUL_GHOST))
                 && (!event.getEntity().level().isClientSide)
                 && (event.getEntity().level() instanceof ServerLevel level)) {
             LogUtils.getLogger().debug(""+event.getEntity().getData(DeckAttachment.DECK_DATA).getEffect("passive.powercards.spiritofspite"));
+            player.getCooldowns().addCooldown(ModCards.getCardItem(ModCards.VENGEFUL_GHOST), 200);
             for (int i = 0; i < event.getEntity().getData(DeckAttachment.DECK_DATA).getEffect("passive.powercards.spiritofspite"); i++) {
                 LogUtils.getLogger().debug("summoned!");
                 BlockPos pos = new BlockPos(player.getBlockX(), player.getBlockY(), player.getBlockZ());

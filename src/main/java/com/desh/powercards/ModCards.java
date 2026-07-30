@@ -362,4 +362,19 @@ public class ModCards {
                     .maxStack(1)
                     .rarity(CardDefinition.CardRarity.LEGENDARY)
                     .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> TENACITY =
+            registerCard("tenacity", () -> CardDefinition
+                    .builder("card.powercards.tenacity", 0xFF001A, 6)
+                    .passive("passive.powercards.tenacity", true)
+                    .maxStack(1)
+                    .rarity(CardDefinition.CardRarity.EPIC)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> GET_LOW =
+            registerCard("spring_jump", () -> CardDefinition
+                    .builder("card.powercards.spring_jump", 0xFF00DC, 1)
+                    .passive("passive.powercards.spring_jump", true)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .build());
 }

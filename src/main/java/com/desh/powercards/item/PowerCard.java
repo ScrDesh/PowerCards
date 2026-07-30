@@ -36,12 +36,12 @@ public class PowerCard extends Item {
         else {
             LogUtils.getLogger().debug("Succeeded at " + player.getData(DeckAttachment.DECK_DATA).getBaseBP());
             player.level().playSound(
-                player,
-                player.getBlockPosBelowThatAffectsMyMovement(),
-                SoundEvents.PLAYER_LEVELUP,
-                SoundSource.PLAYERS,
-                1.0f,
-                1f
+                    player,
+                    player.getBlockPosBelowThatAffectsMyMovement(),
+                    SoundEvents.SNOW_GOLEM_SHEAR,
+                    SoundSource.PLAYERS,
+                    0.4f,
+                    1f
             );
 
             player.displayClientMessage(Component.translatable("ui.powercards.plus1bp").withStyle(ChatFormatting.GREEN), true);

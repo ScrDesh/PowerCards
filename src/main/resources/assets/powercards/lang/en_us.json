@@ -17,10 +17,12 @@
   "passive.powercards.attacks_levitation": "Attacks Levitate Enemies",
   "passive.powercards.attacks_slowness": "Attacks Slow Enemies",
   "passive.powercards.attacks_darkness": "Attacks Envelop Enemies in Darkness",
-  "passive.powercards.spiritofspite": "Chance to Summon Vexes on Attackers",
+  "passive.powercards.spiritofspite": "Summon Vexes on Attackers",
   "passive.powercards.holding": "Keep Cards on Death",
   "passive.powercards.cosmetic_bloom": "Gain a Cinematic Cherry Leaf Aura",
   "passive.powercards.cosmetic_badday": "Gain a Personal Raincloud",
+  "passive.powercards.tenacity": "Can Survive a Lethal Hit",
+  "passive.powercards.spring_jump": "Charge Jump Boost by Sneaking",
 
   "passive.powercards.immunityto.blindness": "Immunity to Blindness",
   "passive.powercards.immunityto.darkness": "Immunity to Darkness",
@@ -46,6 +48,7 @@
   "ui.powercards.cardpacktext": "Gives 4 Random Cards When Used",
   "ui.powercards.max_bp_reached": "Already at Max BP!",
   "ui.powercards.plus1bp": "+1 Build Points",
+  "ui.powercards.chargelevel": "Charge Level",
 
   "item.powercards.card_pack": "Pack of Cards",
   "item.powercards.card_shreds": "Shreds of Card",
@@ -86,5 +89,7 @@
   "card.powercards.leech": "Leech",
   "card.powercards.workethic": "Work Ethic",
   "card.powercards.eyesopen": "Eyes Open",
-  "card.powercards.lunar": "Lunar"
+  "card.powercards.lunar": "Lunar",
+  "card.powercards.tenacity": "Tenacity",
+  "card.powercards.spring_jump": "Spring Jump"
 }
