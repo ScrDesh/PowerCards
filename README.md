@@ -1,25 +1,15 @@
 
-Installation information
+PowerCards [BETA]
 =======
+A mod by ScrDesh (aka ScribbleDesh).
+Powercards adds a bunch of collectible cards with unique costs, effects, and abilities! This turns Minecraft into a Deckbuilder where everyone plays their own unique way! The mod is inspired by similar games such as Block Tales and Paper Mario.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+Gameplay
+=======
+To equip the cards, players gain a new inventory, their 'Deck', and a new resource metre, their 'BP' or Build Points. They start with a relatively low amount of BP, at 3. The total BP cost of all the equipped cards in your deck must not exceed your max BP, if it does, your cards won't work. You can increase your max BP by using an item commonly found in card packs, the Power Card.
+You can find card packs and card shreds in chests throughout the world, like in mineshafts and villages! A card pack gives the player 3 random cards, and 8 card shreds and an iron ingot can craft a card pack. Excess cards a player doesn't want can be turned into card shreds via crafting.
+Happy Deckbuilding!
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
-
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
-
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+Huge Fat Disclaimer
+======
+This is my first ever mod (well, not really, but it's the first one i've wanted to publish), and it's in quite an early state. I plan to improve things a lot and add more features as I learn and go! Please report here all the horrendous bugs you find!
