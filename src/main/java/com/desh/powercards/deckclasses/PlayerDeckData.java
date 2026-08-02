@@ -5,8 +5,6 @@ import com.desh.powercards.ModAttributes;
 import com.desh.powercards.ModRegistries;
 import com.desh.powercards.PowerCards;
 import com.desh.powercards.packets.ModPackets;
-import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -161,7 +159,6 @@ public class PlayerDeckData {
 
             for (CardDefinition.EffectEntry effect : def.getEffectLines()) {
                 MobEffect key = effect.entry().value();
-                LogUtils.getLogger().debug(key + " - " + effectsToAdd.getOrDefault(key, 0)+1);
                 effectsToAdd.put(key, effectsToAdd.getOrDefault(key, 0)+1);
             }
 
@@ -204,7 +201,7 @@ public class PlayerDeckData {
             player.removeEffect(effect);
         }
 
-        Collection <AttributeInstance> currentAtts = player.getAttributes().getSyncableAttributes();
+        Collection<AttributeInstance> currentAtts = player.getAttributes().getSyncableAttributes();
         for (AttributeInstance instance : currentAtts) {
 
             // Collect IDs to remove (avoid modifying while referencing)

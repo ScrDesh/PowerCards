@@ -3,7 +3,6 @@ package com.desh.powercards.deckclasses;
 import com.desh.powercards.CardDefinition;
 import com.desh.powercards.CardItem;
 import com.desh.powercards.ModRegistries;
-import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

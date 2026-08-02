@@ -1,7 +1,6 @@
 package com.desh.powercards.item;
 
 import com.desh.powercards.deckclasses.DeckAttachment;
-import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -24,17 +23,13 @@ public class PowerCard extends Item {
 
         ItemStack stack = player.getItemInHand(usedHand);
 
-        LogUtils.getLogger().debug("" + player.getData(DeckAttachment.DECK_DATA).getBaseBP());
-
         if (level.isClientSide()) {return InteractionResultHolder.consume(stack);}
 
         else if (player.getData(DeckAttachment.DECK_DATA).getBaseBP() >= 27) {
-            LogUtils.getLogger().debug("Failed at " + player.getData(DeckAttachment.DECK_DATA).getBaseBP());
             player.displayClientMessage(Component.translatable("ui.powercards.max_bp_reached").withStyle(ChatFormatting.RED), true);
             return InteractionResultHolder.sidedSuccess(stack, false);
         }
         else {
-            LogUtils.getLogger().debug("Succeeded at " + player.getData(DeckAttachment.DECK_DATA).getBaseBP());
             player.level().playSound(
                     player,
                     player.getBlockPosBelowThatAffectsMyMovement(),

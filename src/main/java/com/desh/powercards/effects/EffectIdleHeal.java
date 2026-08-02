@@ -1,10 +1,8 @@
 package com.desh.powercards.effects;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Animal;
 
 public class EffectIdleHeal extends MobEffect {
     public EffectIdleHeal(MobEffectCategory category, int color) {
