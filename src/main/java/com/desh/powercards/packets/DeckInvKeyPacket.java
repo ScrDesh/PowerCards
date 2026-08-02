@@ -1,7 +1,6 @@
 package com.desh.powercards.packets;
 
 import com.desh.powercards.PowerCards;
-import com.mojang.datafixers.types.Type;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

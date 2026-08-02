@@ -1,6 +1,5 @@
 package com.desh.powercards;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -8,9 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.IModBusEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Comparator;
 import java.util.List;

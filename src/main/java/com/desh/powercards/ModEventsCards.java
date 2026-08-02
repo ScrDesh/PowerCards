@@ -2,16 +2,10 @@ package com.desh.powercards;
 
 import com.desh.powercards.deckclasses.DeckAttachment;
 import com.desh.powercards.deckclasses.PlayerDeckData;
-import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
@@ -25,16 +19,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.MaceItem;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.EntityEvent;
-import net.neoforged.neoforge.event.entity.item.ItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.Map;
 
@@ -116,10 +104,8 @@ public class ModEventsCards {
                 && !player.getCooldowns().isOnCooldown(ModCards.getCardItem(ModCards.VENGEFUL_GHOST))
                 && (!event.getEntity().level().isClientSide)
                 && (event.getEntity().level() instanceof ServerLevel level)) {
-            LogUtils.getLogger().debug(""+event.getEntity().getData(DeckAttachment.DECK_DATA).getEffect("passive.powercards.spiritofspite"));
             player.getCooldowns().addCooldown(ModCards.getCardItem(ModCards.VENGEFUL_GHOST), 200);
             for (int i = 0; i < event.getEntity().getData(DeckAttachment.DECK_DATA).getEffect("passive.powercards.spiritofspite"); i++) {
-                LogUtils.getLogger().debug("summoned!");
                 BlockPos pos = new BlockPos(player.getBlockX(), player.getBlockY(), player.getBlockZ());
                 Vex ghost = EntityType.VEX.spawn(level, pos, MobSpawnType.REINFORCEMENT);
                 ghost.setCustomName(player.getName());

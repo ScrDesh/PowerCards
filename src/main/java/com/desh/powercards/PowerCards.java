@@ -4,16 +4,13 @@ import com.desh.powercards.deckclasses.DeckAttachment;
 import com.desh.powercards.deckclasses.ModMenus;
 import com.desh.powercards.effects.ModEffects;
 import com.desh.powercards.packets.ModPackets;
-import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import org.slf4j.Logger;
 
 @Mod(PowerCards.MODID)
 public class PowerCards {
     public static final String MODID = "powercards";
-    public static final Logger LOGGER = LogUtils.getLogger();
 
     public PowerCards(IEventBus modEventBus, ModContainer modContainer) {
         ModRegistries.register(modEventBus);

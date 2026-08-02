@@ -7,8 +7,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 
-import javax.smartcardio.Card;
-
 public class ModRegistries {
     public static final ResourceKey<Registry<CardDefinition>> CARD_REGISTRY_KEY =
             ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath("powercards", "cards"));

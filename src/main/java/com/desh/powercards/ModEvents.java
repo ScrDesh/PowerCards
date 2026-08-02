@@ -2,8 +2,6 @@ package com.desh.powercards;
 
 import com.desh.powercards.deckclasses.*;
 import com.desh.powercards.packets.DeckInvKeyPacket;
-import com.mojang.logging.LogUtils;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -12,31 +10,27 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.item.trading.MerchantOffers;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.event.LootTableLoadEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -68,49 +62,50 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void addWanderingTrades(WandererTradesEvent event) {
-        List<VillagerTrades.ItemListing> trades = event.getGenericTrades();
-        trades.add((entity, randomSource) -> new MerchantOffer(
-                new ItemCost(Items.EMERALD, 16),
-                new ItemStack(ModCards.CARD_PACK.get(), 1), 3, 3, 0.2f));
+    public static void cardTraderOverwrite(EntityJoinLevelEvent event) {
+        if (!event.loadedFromDisk() && !event.getLevel().isClientSide() && event.getEntity() instanceof WanderingTrader trader && Math.random() <= 0.5) {
+            MerchantOffers offers = new MerchantOffers();
 
-        trades.add((entity, randomSource) -> new MerchantOffer(
-                new ItemCost(ModCards.CARD_SHREDS, 4),
-                new ItemStack(ModCards.CARD_PACK.get(), 1), 3, 3, 0.2f));
+            ArrayList<Item> chosen = new ArrayList<>();
 
+            // stop potentially infinite loops if all pools are somehow empty
+            int limit = 20;
 
-        // fifteen percent chance of being a pure card trader
-        if (Math.random() < 0.15) {trades.clear(); event.getRareTrades().clear();
-            LogUtils.getLogger().debug("card only guy");}
+            for (int i = 0; i < 6; i++) {
 
-        ArrayList<CardItem> chosen = new ArrayList<>();
+                if (limit <= 0) {break;}
+                limit -= 1;
 
-        for (int i = 0; i < 10; i++) {
-            double chance = Math.random();
-            ArrayList<CardItem> pool;
-            int cost = 0;
+                double chance = Math.random();
+                ArrayList<CardItem> pool;
+                int cost = 0;
 
-            if (chance < 0.26) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.COMMON); cost = 4;}
-            else if (chance < 0.48) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.UNCOMMON); cost = 8;}
-            else if (chance < 0.64) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.RARE); cost = 16;}
-            else if (chance < 0.72) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.EPIC); cost = 32;}
-            else {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.LEGENDARY); cost = 16;}
+                if (chance < 0.35) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.COMMON); cost = 16;}
+                else if (chance < 0.60) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.UNCOMMON); cost = 24;}
+                else if (chance < 0.80) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.RARE); cost = 32;}
+                else if (chance < 0.95) {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.EPIC); cost = 48;}
+                else {pool = ModCards.getAllCardItems(CardDefinition.CardRarity.LEGENDARY); cost = 64;}
 
-            pool.removeAll(chosen);
+                int choice = (int)(Math.random() * pool.size());
 
-            if (pool.isEmpty()) {continue;}
+                if (chosen.contains(pool.get(choice))) {i--; continue;}
+                chosen.add(pool.get(choice));
 
-            int choice = (int)(Math.random() * pool.size());
+                final ItemStack item = new ItemStack(pool.get(choice).asItem());
+                final int finalCost = cost;
 
-            final ItemStack item = (chance > 0.76) ? new ItemStack(ModCards.POWER_CARD.get()) : new ItemStack(pool.get(choice).asItem());
-            final int finalCost = cost;
+                offers.add(new MerchantOffer(
+                        new ItemCost(Items.EMERALD, finalCost),
+                        item, 1, 3, 0.2f));
 
-            chosen.add(pool.get(choice));
+            }
 
-            trades.add((entity, randomSource) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, finalCost),
-                    item, 1, 3, 0.2f));
+            offers.add(new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 24),
+                    ModCards.POWER_CARD.toStack(), 3, 3, 0.2f));
 
+            trader.getOffers().clear();
+            trader.getOffers().addAll(offers);
         }
     }
 
