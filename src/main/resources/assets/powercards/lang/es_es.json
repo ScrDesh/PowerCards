@@ -23,6 +23,7 @@
   "passive.powercards.cosmetic_badday": "Te da una Nube de Lluvia",
   "passive.powercards.tenacity": "Sobrevive un Golpe Letal",
   "passive.powercards.spring_jump": "Carga un Salto Mayor Al Agacharse",
+  "passive.powercards.sweet_stepping": "TRANSLATION NEEDED",
 
   "passive.powercards.immunityto.blindness": "Inmune a Cegera",
   "passive.powercards.immunityto.darkness": "Inmune a Oscuridad",
@@ -91,5 +92,6 @@
   "card.powercards.eyesopen": "Mirada Fija",
   "card.powercards.lunar": "Lunar",
   "card.powercards.tenacity": "Tenacidad",
-  "card.powercards.spring_jump": "Salto de Resorte"
+  "card.powercards.spring_jump": "Salto de Resorte",
+  "card.powercards.sweet_stepping": "TRANSLATION NEEDED"
 }

@@ -364,10 +364,18 @@ public class ModCards {
                     .rarity(CardDefinition.CardRarity.EPIC)
                     .build());
 
-    public static final DeferredHolder<CardDefinition, CardDefinition> GET_LOW =
+    public static final DeferredHolder<CardDefinition, CardDefinition> SPRING_JUMP =
             registerCard("spring_jump", () -> CardDefinition
                     .builder("card.powercards.spring_jump", 0x95FF00, 1)
                     .passive("passive.powercards.spring_jump", true)
+                    .rarity(CardDefinition.CardRarity.RARE)
+                    .build());
+
+    public static final DeferredHolder<CardDefinition, CardDefinition> SWEET_STEPPING =
+            registerCard("sweet_stepping", () -> CardDefinition
+                    .builder("card.powercards.sweet_stepping", 0x95FF00, 1)
+                    .passive("passive.powercards.sweet_stepping", true)
+                    .attribute(Attributes.MOVEMENT_SPEED, -0.05, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                     .rarity(CardDefinition.CardRarity.RARE)
                     .build());
 }

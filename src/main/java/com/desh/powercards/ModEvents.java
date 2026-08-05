@@ -162,6 +162,9 @@ public class ModEvents {
     public static void onTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
         CompoundTag data = event.getEntity().getPersistentData();
+        PlayerDeckData abilities = event.getEntity().getData(DeckAttachment.DECK_DATA);
+
+        if (player.isSprinting() && player.isAlive() && abilities.hasEffect("passive.powercards.sweet_stepping")) {player.heal(0.02f*abilities.getEffect("passive.powercards.sweet_stepping"));}
 
         if (player.isCrouching() && player.onGround()) {
             data.putInt("crouchTime", data.getInt("crouchTime")+1);
