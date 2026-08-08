@@ -92,7 +92,7 @@ public class ModEventsCards {
 
 
         // REQUIRE ATTACKER STUFF BELOW, EVERYTHING ELSE ABOVE
-        if (attacker == null) {return;}
+        if (attacker == null || attacker.getWeaponItem() == null) {return;}
 
         // SPECIFIC EFFECT - NO MACE
         if (attacker.getWeaponItem().getItem() instanceof MaceItem &&
