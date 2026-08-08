@@ -2,9 +2,11 @@ package com.desh.powercards;
 
 import com.desh.powercards.deckclasses.*;
 import com.desh.powercards.packets.DeckInvKeyPacket;
+import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -21,17 +23,20 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,6 +153,15 @@ public class ModEvents {
     }
 
     private static final List<String> EXPLOSION_TYPES = Arrays.asList("explosion", "explosion.player", "fireball", "fireworks", "witherSkull");
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onArmourChange(LivingEquipmentChangeEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getEntity().getServer() != null) {
+
+            ServerTaskScheduler.scheduleIn(event.getEntity().getServer(), 1, () ->
+                    player.getData(DeckAttachment.DECK_DATA).rebuildDerivedState());
+        }
+    }
 
     @SubscribeEvent
     public static void onHeal(LivingHealEvent event) {

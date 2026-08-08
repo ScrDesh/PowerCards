@@ -1,0 +1,33 @@
+{
+  "description": {"translate": "enchantment.powercards.decking"},
+  "supported_items": "#minecraft:enchantable/armor",
+  "primary_items": "#minecraft:enchantable/armor",
+  "slots": ["armor"],
+
+  "weight": 10,
+  "anvil_cost": 5,
+  "min_cost": {
+    "base": 3,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 30,
+    "per_level_above_first": 6
+  },
+  "max_level": 3,
+
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "attribute": "powercards:bp_bonus",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 1,
+          "per_level_above_first": 1.0
+        },
+        "operation": "add_value",
+        "id": "powercards:noncard.enchantment.decking_bp"
+      }
+    ]
+  }
+}

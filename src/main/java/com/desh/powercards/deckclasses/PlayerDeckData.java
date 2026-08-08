@@ -52,7 +52,7 @@ public class PlayerDeckData {
     // Derived State Rebuild
 
     public void rebuildDerivedState() {
-        deckValid = deckInventory.getTotalEquippedCost() <= totalBP;
+        deckValid = deckInventory.getTotalEquippedCost() <= getTotalBP();
         activeEffects.clear();
 
         if (!deckValid) {
@@ -208,7 +208,7 @@ public class PlayerDeckData {
             List<ResourceLocation> toRemove2 = new ArrayList<>();
 
             for (AttributeModifier modifier : instance.getModifiers()) {
-                if (modifier.id().getNamespace().equals("powercards")) {
+                if (modifier.id().getNamespace().equals("powercards") && !modifier.id().getPath().contains("noncard")) {
                     toRemove2.add(modifier.id());
                 }
             }
